@@ -78,27 +78,27 @@ def fetch_data_from_firebase(company):
 
 # Define the mapping between the text file names and the sections in your document
 file_section_mapping = {
- #   "legal_company_name": "Legal Company Name",
- # "headquarters": "Headquarters",
- #   "year_incorporated": "Year Incorporated",
-  #  "lines_of_business": "Line(s) of business",
-   # "brief_synopsis": "Brief synopsis",
-#    "banner_brands": "Banner brands",
+#    "legal_company_name": "Legal Company Name",
+#  "headquarters": "Headquarters",
+#    "year_incorporated": "Year Incorporated",
+#    "lines_of_business": "Line(s) of business",
+#    "brief_synopsis": "Brief synopsis",
+ #   "banner_brands": "Banner brands",
  #   "target_market": "Target market",
- #   "revenue": "Revenue",
-  #  "financial_performance_2023": "Financial performance 2023",
+#    "revenue": "Revenue",
+#    "financial_performance_2023": "Financial performance 2023",
  #  "market_capitalization": "Market capitalization",
  #  "company_owner": "Company owner",
  # "founding_story": "Founding story",
  #   "key_points_of_difference": "Key points of difference",
-  # "top_5_strategic_initiatives": "Top 5 strategic initiatives",
-  #  "worries_risks_and_concerns": "Worries, risks and concerns",
-  #  "main_competitors": "Main competitors",
+ #  "top_5_strategic_initiatives": "Top 5 strategic initiatives",
+    "worries_risks_and_concerns": "Worries, risks and concerns",
+    "main_competitors": "Main competitors",
   #  "swot_analysis": "SWOT Analysis",
   #  "store_design_images": "Store design images",
  # "design_agency": "Store design agency",
-   "recent_news": "Recent company news",
-   "recent_executive_moves": "Recent executive moves"
+ #  "recent_news": "Recent company news",
+  # "recent_executive_moves": "Recent executive moves"
 }
 
 
@@ -351,39 +351,39 @@ def index():
 def handle_run_script():
     company = request.json['company']
 
-    scripts = ['main20.py', 'main21.py']
+    scripts = ['main15.py', 'main16.py']
     
 
 
     sections_required = [
-    #    "legal_company_name",
+     #   "legal_company_name",
      #   "headquarters",
-     #   "year_incorporated",
-     #   "lines_of_business",
-     #   "brief_synopsis",
+      #  "year_incorporated",
+    #    "lines_of_business",
+      #  "brief_synopsis",
      #   "banner_brands",
-     #   "target_market",
-     #   "revenue",
-     #   "financial_performance_2023",
-     #   "market_capitalization",
-     #   "company_owner",
-     #   "founding_story",
-     #   "key_points_of_difference",
-     #   "top_5_strategic_initiatives",
-     #   "worries_risks_and_concerns",
-      #  "main_competitors",
-     #   "swot_analysis",
+       # "target_market",
+      #  "revenue",
+      #  "financial_performance_2023",
+      #  "market_capitalization",
+      #  "company_owner",
+      #  "founding_story",
+      #  "key_points_of_difference",
+      #  "top_5_strategic_initiatives",
+        "worries_risks_and_concerns",
+        "main_competitors",
+      #  "swot_analysis",
       #  "store_design_images",
       #  "design_agency",
-        "recent_news",
-        "recent_executive_moves"
+      #  "recent_news",
+      #  "recent_executive_moves"
     ]
 
     # Divide the scripts into batches for execution
     batch1 = scripts[0:2]   # Scripts 1-5
- #   batch2 = scripts[5:10]  # Scripts 6-10
+   # batch2 = scripts[5:10]  # Scripts 6-10
   #  batch3 = scripts[10:15] # Scripts 11-15
-   # batch4 = scripts[15:21]   # Scripts 16-21
+  #  batch4 = scripts[15:21]   # Scripts 16-21
 
     # Execute the scripts in batches
     execute_scripts_in_batches([batch1], company)
