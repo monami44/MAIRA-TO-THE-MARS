@@ -1,0 +1,772 @@
+      const legalCompanyNameSection = reportData.sections['Find Legal Company Name'] ? [JSON.stringify(reportData.sections['Find Legal Company Name'])] : [];
+         displayLegalCompanyName(legalCompanyNameSection);
+    const headquartersSection = reportData.sections['Find Headquaters'] ? [JSON.stringify(reportData.sections['Find Headquaters'])] : [];
+    displayHeadquarters(headquartersSection);
+
+    const yearIncorporatedSection = reportData.sections['Find Year Incorporated'] ? [JSON.stringify(reportData.sections['Find Year Incorporated'])] : [];
+   displayYearIncorporated(yearIncorporatedSection);
+
+    const briefSynopsisSection = reportData.sections['Find Brief Synopsis'] ? [JSON.stringify(reportData.sections['Find Brief Synopsis'])] : [];
+   displayBriefSynopsis(briefSynopsisSection);
+    
+     displayLinesOfBusiness(reportData.sections['Find Line Of Business']);
+        displayBannerBrands(reportData.sections['Find Banner Brands']);
+        displayTargetMarket(reportData.sections['Find Target Market']);
+        displayRevenue(reportData.sections['Find Revenue']);
+       displayFinancialPerformance(reportData.sections['Find Financial Performance 2023']);
+    displayMarketCapitalization(reportData.sections['Find Market Capitalization']);
+        displayCompanyOwner(reportData.sections['Find Company Owner']);
+        displayFoundingStory(reportData.sections['Find Founding Story']);
+        displayKeyPointsOfDifference(reportData.sections['Find Key Points Of Difference']);
+       displayTopStrategicInitiatives(reportData.sections['Find Top 5 Strategic Initiatives']);
+    displayWorriesRisksConcerns(reportData.sections['Find Worries Risks Concerns']);
+    const mainCompetitorsSection = reportData.sections['Find Main Competitors'] ? reportData.sections['Find Main Competitors'].competitors : [];
+    displayMainCompetitors(mainCompetitorsSection, reportData["Retailer Profile"]);
+        displaySWOTAnalysis(reportData.sections['Create Swot Analysis']);
+        displayStoreDesignImages(reportData.sections['Analyse Visual Market']);
+        displayStoreDesignAgency(reportData.sections['Find Store Designer Agency']);
+
+
+
+
+
+
+
+ function displayLegalCompanyName(sectionContent) {
+        const companyNameElement = document.getElementById('legal-company-name');
+        companyNameElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Legal Company Name:';
+        companyNameElement.appendChild(sectionTitle);
+    
+        sectionContent.forEach(contentItem => {
+            // Since sectionContent is now properly an array, this should work without errors
+            const contentObject = JSON.parse(contentItem);
+            if (contentObject && contentObject.name) {
+                const nameElement = document.createElement('p');
+                nameElement.textContent = contentObject.name;
+                companyNameElement.appendChild(nameElement);
+            } else {
+                console.error('Company name data is missing or structured incorrectly.');
+            }
+        });
+    }
+    
+    
+    
+    
+
+
+    
+
+    function displayHeadquarters(sectionContent) {
+        const headquartersElement = document.getElementById('headquarters'); // Ensure this container is in your HTML
+        headquartersElement.innerHTML = ''; // Clear previous content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Headquarters:';
+        headquartersElement.appendChild(sectionTitle);
+    
+        sectionContent.forEach(contentItem => {
+            // Since sectionContent is now properly an array, this should work without errors
+            const contentObject = JSON.parse(contentItem);
+            if (contentObject && contentObject.location) {
+                const addressElement = document.createElement('p');
+                addressElement.textContent = contentObject.location; // Use the 'location' property
+                headquartersElement.appendChild(addressElement);
+            } else {
+                console.error('Headquarters data is missing or structured incorrectly.');
+            }
+        });
+    }
+    
+    
+
+    function displayYearIncorporated(sectionContent) {
+        const yearIncorporatedElement = document.getElementById('year-incorporated'); // Ensure this container is in your HTML
+        yearIncorporatedElement.innerHTML = ''; // Clear previous content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Year Incorporated:';
+        yearIncorporatedElement.appendChild(sectionTitle);
+    
+        sectionContent.forEach(contentItem => {
+            // Directly parse the JSON string since it's correctly formatted
+            const contentObject = JSON.parse(contentItem);
+            if (contentObject && contentObject.year) {
+                const yearElement = document.createElement('p');
+                yearElement.textContent = contentObject.year; // Directly use the 'year' property
+                yearIncorporatedElement.appendChild(yearElement);
+            } else {
+                console.error('Year of incorporation data is missing or structured incorrectly.');
+            }
+        });
+    }
+    
+
+    function displayBriefSynopsis(sectionContent) {
+        const briefSynopsisElement = document.getElementById('brief-synopsis'); // Ensure this container exists in your HTML
+        briefSynopsisElement.innerHTML = ''; // Clear previous content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Brief synopsis:';
+        briefSynopsisElement.appendChild(sectionTitle);
+    
+        sectionContent.forEach(contentItem => {
+            try {
+                // Directly parse the JSON string without needing to correct its format
+                const contentObject = JSON.parse(contentItem);
+                if (contentObject && contentObject.synopsis) {
+                    const synopsisElement = document.createElement('p');
+                    synopsisElement.textContent = contentObject.synopsis; // Use the 'synopsis' property
+                    briefSynopsisElement.appendChild(synopsisElement);
+                } else {
+                    console.error('Synopsis data is missing or structured incorrectly.');
+                }
+            } catch (error) {
+                console.error('Parsing error:', error);
+                // Handle parsing error or incorrect JSON format
+            }
+        });
+    }
+
+    function displayLinesOfBusiness(businessLinesData) {
+        const linesOfBusinessElement = document.getElementById('lines-of-business');
+        if (!linesOfBusinessElement) return;
+    
+        linesOfBusinessElement.innerHTML = '';
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Line(s) of business:';
+        linesOfBusinessElement.appendChild(sectionTitle);
+    
+        // Assuming businessLinesData is an object like the provided JSON example
+        businessLinesData.primary_business_lines.forEach((line) => {
+            const lineElement = document.createElement('p');
+            lineElement.innerHTML = `<strong>${line.line_name}:</strong> ${line.description}`;
+            linesOfBusinessElement.appendChild(lineElement);
+    
+            if (line.sub_details) {
+                line.sub_details.forEach((subDetail) => {
+                    const subDetailElement = document.createElement('p');
+                    subDetailElement.textContent = `     - ${subDetail.detail_name}: ${subDetail.detail_description}`;
+                    linesOfBusinessElement.appendChild(subDetailElement);
+                });
+            }
+        });
+    
+        if (businessLinesData.other_notable_business_lines.length > 0) {
+            const otherLinesTitle = document.createElement('h3');
+            otherLinesTitle.textContent = 'Other Notable Business Lines:';
+            linesOfBusinessElement.appendChild(otherLinesTitle);
+    
+            businessLinesData.other_notable_business_lines.forEach((line) => {
+                const otherLineElement = document.createElement('p');
+                otherLineElement.textContent = `     - ${line}`;
+                linesOfBusinessElement.appendChild(otherLineElement);
+            });
+        }
+    }
+    
+    
+    
+    
+
+    function displayBannerBrands(bannerBrandsData) {
+        const bannerBrandsElement = document.getElementById('banner-brands'); 
+        if (!bannerBrandsElement) return; 
+    
+        bannerBrandsElement.innerHTML = ''; 
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = `${bannerBrandsData.company_name} Banner Brands:`; // Display company name in title
+        bannerBrandsElement.appendChild(sectionTitle);
+    
+        // Iterate through the banner brands
+        bannerBrandsData.banner_brands.forEach((brand) => {
+            const brandElement = document.createElement('p');
+            brandElement.innerHTML = `<strong>${brand.name}:</strong> ${brand.description}`; // Format brand name and description
+            bannerBrandsElement.appendChild(brandElement);
+        });
+    }
+    
+
+    function displayTargetMarket(sectionContent) {
+        const targetMarketElement = document.getElementById('target-market');
+        if (!targetMarketElement) {
+            console.error('No element found with the ID "target-market".');
+            return; 
+        }
+    
+        targetMarketElement.innerHTML = ''; 
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Target Market:';
+        targetMarketElement.appendChild(sectionTitle);
+    
+        for (const [category, details] of Object.entries(sectionContent)) {
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.textContent = category.replace(/_/g, ' ')
+                                            .split(' ') 
+                                            .map(word => word[0].toUpperCase() + word.slice(1))                
+                                            .join(' '); 
+            targetMarketElement.appendChild(categoryTitle);
+    
+            for (const [key, value] of Object.entries(details)) {
+                if (value.toLowerCase() === 'n/a') {
+                    continue; // Skip if the value is 'N/A'
+                } 
+    
+                const detailHeading = document.createElement('strong');
+                detailHeading.textContent = key.replace(/_/g, ' ')
+                                               .split(' ')
+                                               .map(word => word[0].toUpperCase() + word.slice(1))
+                                               .join(' ') + ': '; 
+                const detailText = document.createTextNode(value);
+    
+                const paragraph = document.createElement('p');
+                paragraph.appendChild(detailHeading); 
+                paragraph.appendChild(detailText);
+                targetMarketElement.appendChild(paragraph); 
+            }
+        }
+    }
+    
+    
+
+
+
+    function displayRevenue(revenueSection) {
+        const revenueElement = document.getElementById('revenue');
+        if (!revenueElement) return;
+    
+        revenueElement.innerHTML = ''; // Clear previous content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Revenue Information:';
+        revenueElement.appendChild(sectionTitle);
+    
+        // Handle 'revenue' being a string (assumed structured text or summary)
+        if (revenueSection.revenue) {
+            const revenueText = document.createElement('p');
+            revenueText.textContent = `Overall Revenue: ${revenueSection.revenue}`;
+            revenueElement.appendChild(revenueText);
+        }
+    
+        // Check for and handle specific year revenues, if present
+        if (revenueSection.rev_2022) {
+            const rev2022Text = document.createElement('p');
+            rev2022Text.textContent = `2022 Revenue: ${revenueSection.rev_2022}`;
+            revenueElement.appendChild(rev2022Text);
+        }
+    
+        if (revenueSection.rev_2023) {
+            const rev2023Text = document.createElement('p');
+            rev2023Text.textContent = `2023 Revenue: ${revenueSection.rev_2023}`;
+            revenueElement.appendChild(rev2023Text);
+        }
+    
+        // Check for and handle 'extra_information', if present
+        if (revenueSection.extra_information) {
+            const extraInfoText = document.createElement('p');
+            extraInfoText.textContent = revenueSection.extra_information;
+            revenueElement.appendChild(extraInfoText);
+        }
+    
+        // If none of the expected data is present, log an error
+        if (!revenueSection.revenue && !revenueSection.rev_2022 && !revenueSection.rev_2023) {
+            console.error('Revenue data is missing or not in expected format.');
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displayFinancialPerformance(sectionContent) {
+        const financialPerformanceElement = document.getElementById('financial-performance');
+        if (!financialPerformanceElement) return;
+    
+        financialPerformanceElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Financial Performance 2023:';
+        financialPerformanceElement.appendChild(sectionTitle);
+    
+        // Display the description
+        if (sectionContent && sectionContent.description) {
+            const descriptionParagraph = document.createElement('p');
+            descriptionParagraph.textContent = sectionContent.description;
+            financialPerformanceElement.appendChild(descriptionParagraph);
+        }
+    
+        // Display key highlights
+        if (sectionContent && sectionContent.key_highlights && sectionContent.key_highlights.length > 0) {
+            const highlightsTitle = document.createElement('h4');
+            highlightsTitle.textContent = 'Key Highlights:';
+            financialPerformanceElement.appendChild(highlightsTitle);
+    
+            const highlightsList = document.createElement('ul');
+            sectionContent.key_highlights.forEach(highlight => {
+                const listItem = document.createElement('li');
+                listItem.textContent = highlight;
+                highlightsList.appendChild(listItem);
+            });
+            financialPerformanceElement.appendChild(highlightsList);
+        }
+    
+        // Display the summary
+        if (sectionContent && sectionContent.summary) {
+            const summaryTitle = document.createElement('h4');
+            summaryTitle.textContent = 'Summary:';
+            financialPerformanceElement.appendChild(summaryTitle);
+    
+            const summaryParagraph = document.createElement('p');
+            summaryParagraph.textContent = sectionContent.summary;
+            financialPerformanceElement.appendChild(summaryParagraph);
+        }
+    
+        // Display the link to the full report
+        if (sectionContent && sectionContent.link) {
+            const sourceLink = document.createElement('a');
+            sourceLink.href = sectionContent.link;
+            sourceLink.textContent = 'Read the full report';
+            sourceLink.target = '_blank';
+            sourceLink.style.display = 'block'; // Source on a new line
+            financialPerformanceElement.appendChild(sourceLink);
+        } else {
+            console.error('Financial performance link is missing.');
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displayMarketCapitalization(sectionContent) {
+        const marketCapElement = document.getElementById('market-capitalization');
+        if (!marketCapElement) return;
+    
+        marketCapElement.innerHTML = '';
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Market Capitalization:';
+        marketCapElement.appendChild(sectionTitle);
+    
+        // Adjusting to use 'description' instead of 'market_cap'
+        if (sectionContent && sectionContent.description) {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = sectionContent.description; // Using the 'description' property
+            marketCapElement.appendChild(paragraph);
+        } else {
+            console.error('Market capitalization information is missing.');
+        }
+    }
+    
+    
+    
+    
+    
+    
+
+    function displayCompanyOwner(sectionContent) {
+        const companyOwnerElement = document.getElementById('company-owner');
+        if (!companyOwnerElement) return;
+    
+        companyOwnerElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Ownership Structure:';
+        companyOwnerElement.appendChild(sectionTitle);
+    
+        // Display the ownership structure
+        if (sectionContent && sectionContent.ownership_structure) {
+            const structureParagraph = document.createElement('p');
+            structureParagraph.innerHTML = sectionContent.ownership_structure.replace(/\n/g, '<br>'); // Properly handle new lines
+            companyOwnerElement.appendChild(structureParagraph);
+        }
+    
+        // Display major shareholders
+        if (sectionContent && sectionContent.major_shareholders) {
+            const shareholdersTitle = document.createElement('h4');
+            shareholdersTitle.textContent = 'Major Shareholders:';
+            companyOwnerElement.appendChild(shareholdersTitle);
+    
+            const shareholdersList = document.createElement('ul');
+            sectionContent.major_shareholders.forEach(({ shareholder, ownership_percentage }) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${shareholder}: ${ownership_percentage}`; // Assuming the percentage is a string
+                shareholdersList.appendChild(listItem);
+            });
+            companyOwnerElement.appendChild(shareholdersList);
+        }
+    
+        // Display summary
+        if (sectionContent && sectionContent.summary) {
+            const summaryTitle = document.createElement('h4');
+            summaryTitle.textContent = 'Summary:';
+            companyOwnerElement.appendChild(summaryTitle);
+    
+            const summaryParagraph = document.createElement('p');
+            summaryParagraph.textContent = sectionContent.summary;
+            companyOwnerElement.appendChild(summaryParagraph);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displayFoundingStory(sectionContent) {
+        const foundingStoryElement = document.getElementById('founding-story'); // Ensure this container exists in your HTML
+        if (!foundingStoryElement) return;
+    
+        foundingStoryElement.innerHTML = ''; // Clear previous content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Founding Story:';
+        foundingStoryElement.appendChild(sectionTitle);
+    
+        // Directly use the 'description' property from the sectionContent object
+        if (sectionContent && sectionContent.description) {
+            // Consider the description as a single paragraph or split into multiple paragraphs if necessary
+            const paragraphs = sectionContent.description.split('\n\n').filter(Boolean); // Split by double newlines to get paragraphs, if formatted that way
+    
+            paragraphs.forEach(paragraphText => {
+                const paragraph = document.createElement('p');
+                paragraph.textContent = paragraphText.trim();
+                foundingStoryElement.appendChild(paragraph);
+            });
+        }
+    }
+    
+    
+    
+
+    function displayKeyPointsOfDifference(sectionContent) {
+        const keyPointsElement = document.getElementById('key-points-of-difference');
+        if (!keyPointsElement) return;
+    
+        keyPointsElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Key Points of Difference:';
+        keyPointsElement.appendChild(sectionTitle);
+    
+        // Check and display the description if it exists
+        if (sectionContent && sectionContent.description) {
+            const descriptionParagraph = document.createElement('p');
+            descriptionParagraph.textContent = sectionContent.description;
+            keyPointsElement.appendChild(descriptionParagraph);
+        }
+    
+        // Display points of difference if they exist
+        if (sectionContent && sectionContent.points_of_difference && Array.isArray(sectionContent.points_of_difference)) {
+            const pointsList = document.createElement('ul');
+            sectionContent.points_of_difference.forEach(point => {
+                const pointItem = document.createElement('li');
+                pointItem.textContent = point;
+                pointsList.appendChild(pointItem);
+            });
+            keyPointsElement.appendChild(pointsList);
+        }
+    }
+    
+    
+
+    function displayTopStrategicInitiatives(sectionContent) {
+        const strategicInitiativesElement = document.getElementById('top-strategic-initiatives');
+        if (!strategicInitiativesElement) return;
+    
+        strategicInitiativesElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Top Strategic Initiatives:';
+        strategicInitiativesElement.appendChild(sectionTitle);
+    
+        // Validate and iterate over the initiatives array, if it exists
+        if (sectionContent && Array.isArray(sectionContent.initiatives)) {
+            sectionContent.initiatives.forEach((description) => {
+                const initiativeElement = document.createElement('div');
+                initiativeElement.classList.add('initiative');
+    
+                // Directly use the string description for each initiative
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = description;
+                initiativeElement.appendChild(descriptionElement);
+    
+                strategicInitiativesElement.appendChild(initiativeElement);
+            });
+        } else {
+            // Handle the case where initiatives are not provided or are not an array
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = 'No strategic initiatives data found.';
+            strategicInitiativesElement.appendChild(errorMessage);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displayWorriesRisksConcerns(data) {
+        const worriesRisksConcernsElement = document.getElementById('worries-risks-concerns');
+        if (!worriesRisksConcernsElement) return;
+    
+        worriesRisksConcernsElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = data.title || 'Worries, Risks, and Concerns:';
+        worriesRisksConcernsElement.appendChild(sectionTitle);
+    
+        // Display each risk description
+        if (data.risks && data.risks.length > 0) {
+            data.risks.forEach(risk => {
+                const riskElement = document.createElement('p');
+                riskElement.textContent = risk;
+                worriesRisksConcernsElement.appendChild(riskElement);
+            });
+        } else {
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = 'No worries, risks, and concerns data found.';
+            worriesRisksConcernsElement.appendChild(errorMessage);
+        }
+    
+        // Display hyperlinks if available, with "Source" labeling
+        if (data.hyperlinks && data.hyperlinks.length > 0) {
+            data.hyperlinks.forEach((link, index) => {
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', link);
+                linkElement.setAttribute('target', '_blank');
+                // Label as "Source" if only one link, or "Source 1", "Source 2", etc., for multiple
+                linkElement.textContent = data.hyperlinks.length > 1 ? `Source ${index + 1}` : 'Source';
+                worriesRisksConcernsElement.appendChild(document.createElement('br')); // New line before the link
+                worriesRisksConcernsElement.appendChild(linkElement);
+            });
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displayMainCompetitors(competitors, retailerProfile) {
+        const mainCompetitorsElement = document.getElementById('main-competitors');
+        if (!mainCompetitorsElement) {
+            console.error('Main competitors element not found in the document.');
+            return;
+        }
+    
+        mainCompetitorsElement.innerHTML = ''; // Clear existing content
+    
+        if (!competitors || competitors.length === 0) {
+            console.error('No competitors data provided or array is empty.');
+            mainCompetitorsElement.textContent = 'Main competitors data is not available or incorrectly structured.';
+            return;
+        }
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = `${retailerProfile} Main Competitors:`;
+        mainCompetitorsElement.appendChild(sectionTitle);
+    
+        competitors.forEach((competitor) => {
+            const competitorElement = document.createElement('p');
+            competitorElement.textContent = competitor;
+            mainCompetitorsElement.appendChild(competitorElement);
+        });
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    function displaySWOTAnalysis(swotData) {
+        const swotAnalysisElement = document.getElementById('swot-analysis');
+        if (!swotAnalysisElement) return;
+    
+        swotAnalysisElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'SWOT Analysis:';
+        swotAnalysisElement.appendChild(sectionTitle);
+    
+        // Directly accessing properties of swotData
+        Object.keys(swotData).forEach(categoryKey => {
+            const category = swotData[categoryKey];
+    
+            const categoryElement = document.createElement('h3');
+            categoryElement.textContent = categoryKey; // "Strengths", "Weaknesses", "Opportunities", "Threats"
+            swotAnalysisElement.appendChild(categoryElement);
+    
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = category.description;
+            swotAnalysisElement.appendChild(descriptionElement);
+    
+            if (category.link) {
+                const linkElement = document.createElement('a');
+                linkElement.href = category.link;
+                linkElement.textContent = 'Learn more';
+                linkElement.target = '_blank'; // Open in new tab
+                swotAnalysisElement.appendChild(linkElement);
+            }
+        });
+    }
+    
+    
+    
+    
+    
+    
+    
+
+    function displayStoreDesignImages(imagesData) {
+        const storeDesignImagesElement = document.getElementById('store-design-images');
+        if (!storeDesignImagesElement) {
+            console.error('Store design images element not found in the document.');
+            return;
+        }
+    
+        storeDesignImagesElement.innerHTML = '';
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Store Design Images:';
+        storeDesignImagesElement.appendChild(sectionTitle);
+        
+        // Check if imagesData has a property 'images' that is an array
+        if (imagesData && Array.isArray(imagesData.images)) {
+            // Iterate over the images array and create links
+            imagesData.images.forEach((imageUrl, index) => {
+                const imageParagraph = document.createElement('p');
+                const imageLink = document.createElement('a');
+                imageLink.href = imageUrl;
+                imageLink.textContent = `Image ${index + 1}`;
+                imageLink.target = '_blank'; // Open in a new tab
+                imageParagraph.appendChild(imageLink);
+        
+                storeDesignImagesElement.appendChild(imageParagraph);
+            });
+        } else {
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = 'No store design images data available.';
+            storeDesignImagesElement.appendChild(errorMessage);
+        }
+    }
+    
+
+    function displayStoreDesignAgency(data) {
+        const storeDesignAgencyElement = document.getElementById('store-design-agency');
+        if (!storeDesignAgencyElement) {
+            console.error('Store design agency element not found in the document.');
+            return;
+        }
+    
+        storeDesignAgencyElement.innerHTML = ''; // Clear existing content
+    
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = 'Store Design Agency:';
+        storeDesignAgencyElement.appendChild(sectionTitle);
+    
+        // Create paragraph for description
+        if (data.description) {
+            const descriptionParagraph = document.createElement('p');
+            descriptionParagraph.textContent = data.description;
+            storeDesignAgencyElement.appendChild(descriptionParagraph);
+        }
+    
+        // Create clickable link for website with the text "Learn more"
+        if (data.website) {
+            const websiteParagraph = document.createElement('p');
+            const websiteLink = document.createElement('a');
+            websiteLink.href = data.website;
+            websiteLink.textContent = 'Learn more';
+            websiteLink.target = '_blank'; // Open in a new tab
+            websiteParagraph.appendChild(websiteLink);
+            storeDesignAgencyElement.appendChild(websiteParagraph);
+        }
+    }
