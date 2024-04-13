@@ -1313,32 +1313,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
   
-         displayLegalCompanyName(reportData.sections.legal_company_name);
+  //      displayLegalCompanyName(reportData.sections.legal_company_name);
  
-   displayHeadquarters(reportData.sections.headquarters);
+//   displayHeadquarters(reportData.sections.headquarters);
 
  
-  displayYearIncorporated(reportData.sections.year_incorporated);
+//  displayYearIncorporated(reportData.sections.year_incorporated);
 
  
-   displayBriefSynopsis(reportData.sections.brief_synopsis);
+//   displayBriefSynopsis(reportData.sections.brief_synopsis);
     
-     displayLinesOfBusiness(reportData.sections.lines_of_business);
-        displayBannerBrands(reportData.sections.banner_brands);
-        displayTargetMarket(reportData.sections.target_market);
-       displayRevenue(reportData.sections.revenue);
-       displayFinancialPerformance(reportData.sections.financial_performance_2023);
-   displayMarketCapitalization(reportData.sections.market_capitalization);
-       displayCompanyOwner(reportData.sections.company_owner);
-        displayFoundingStory(reportData.sections.founding_story);
-        displayKeyPointsOfDifference(reportData.sections.key_points_of_difference);
-      displayTopStrategicInitiatives(reportData.sections.top_5_strategic_initiatives);
-    displayWorriesRisksConcerns(reportData.sections.worries_risks_and_concerns);
+//     displayLinesOfBusiness(reportData.sections.lines_of_business);
+//        displayBannerBrands(reportData.sections.banner_brands);
+//        displayTargetMarket(reportData.sections.target_market);
+//       displayRevenue(reportData.sections.revenue);
+//       displayFinancialPerformance(reportData.sections.financial_performance_2023);
+//   displayMarketCapitalization(reportData.sections.market_capitalization);
+//       displayCompanyOwner(reportData.sections.company_owner);
+//        displayFoundingStory(reportData.sections.founding_story);
+//        displayKeyPointsOfDifference(reportData.sections.key_points_of_difference);
+ //     displayTopStrategicInitiatives(reportData.sections.top_5_strategic_initiatives);
+//    displayWorriesRisksConcerns(reportData.sections.worries_risks_and_concerns);
  
-    displayMainCompetitors(reportData.sections.main_competitors);
-        displaySWOTAnalysis(reportData.sections.swot_analysis);
-        displayStoreDesignImages(reportData.sections.store_design_images);
-        displayStoreDesignAgency(reportData.sections.design_agency);
+//    displayMainCompetitors(reportData.sections.main_competitors);
+//        displaySWOTAnalysis(reportData.sections.swot_analysis);
+//        displayStoreDesignImages(reportData.sections.store_design_images);
+//        displayStoreDesignAgency(reportData.sections.design_agency);
 
         
         console.log('Displaying recent company news with data:', reportData.sections.recent_news); // Log the data for company news
